@@ -73,6 +73,7 @@ class Report < ActiveRecord::Base
       node.last_report = self unless node.last_report == self
       node.reported_at = self.time
       node.success = self.success?
+      node.disabled = false unless node.disabled == false
 
       # FIXME #update_without_callbacks doesn't update the object, and #save! is creating unwanted timeline events.
       ### node.send :update_without_callbacks # do not create a timeline event

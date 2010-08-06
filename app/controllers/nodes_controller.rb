@@ -25,6 +25,24 @@ class NodesController < InheritedResources::Base
     scoped_index :no_longer_reporting
   end
 
+  def disabled
+    scoped_index :disabled
+  end
+
+  def enable
+    node = Node.find_by_id(params[:id])
+    node.disabled = false
+    node.save
+    redirect_to :back
+  end
+
+  def disable
+    node = Node.find_by_id(params[:id])
+    node.disabled = true
+    node.save
+    redirect_to :back
+  end
+
   # TODO: routing currently can't handle nested resources due to node's id
   # requirements
   def reports

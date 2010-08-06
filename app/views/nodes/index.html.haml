@@ -9,6 +9,8 @@
       - elsif params[:current] or params[:successful]
         = Node.label_for_currentness_and_successfulness(params[:current] == "true", params[:successful] == "true").capitalize
         nodes
+      - elsif params[:disabled] == "true"
+        Disabled Nodes
       - else
         Nodes
     = render 'search'

@@ -64,7 +64,10 @@ class Node < ActiveRecord::Base
   NO_LONGER_REPORTING_CUTOFF = 1.hour
 
   # Return nodes that haven't reported recently.
-  named_scope :no_longer_reporting, :conditions => ['reported_at < ?', NO_LONGER_REPORTING_CUTOFF.ago]
+  named_scope :no_longer_reporting, :conditions => ['reported_at < ? AND disabled=FALSE', NO_LONGER_REPORTING_CUTOFF.ago]
+  
+  # Return nodes that are currently disabled.
+  named_scope :disabled_nodes, :conditions => {:disabled => true}
 
   def self.count_by_currentness_and_successfulness(currentness, successfulness)
     # FIXME The #length call is inefficient, but how do I make #count work since it lacks support for :having?
@@ -82,6 +85,10 @@ class Node < ActiveRecord::Base
 
   def self.count_no_longer_reporting
     no_longer_reporting.count
+  end
+
+  def self.count_disabled_nodes
+    disabled_nodes.count
   end
 
   def to_param

@@ -5,6 +5,10 @@
       = node_status_icon(resource)
       = h resource.name
     %ul.actions
+      - if @node.disabled
+        %li= link_to 'Enable', { :controller => :nodes, :action => :enable, :id => @node.id }, :class => "edit button"
+      - else
+        %li= link_to 'Disable', { :controller => :nodes, :action => :disable, :id => @node.id }, :class => "edit button"
       %li= link_to 'Edit', edit_node_path(@node), :class => "edit button", :rel => 'inspect'
       %li= link_to 'Destroy', @node, :confirm => 'Are you sure?', :method => :delete, :class => "delete button"
   .item
